@@ -1,7 +1,7 @@
 # rSZR
 rSZR is a very simple program that mass resizes all files in a given folder.
 
-It supports most common image file formats, include but not limited to: jpg, jpeg, png, bmp, raw, and jfif.
+It supports most common image file formats, included but not limited to: jpg, jpeg, png, bmp, raw, and jfif.
 
 
 # Usage
