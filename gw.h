@@ -16,9 +16,11 @@ public:
     ~GW();
 
 private slots:
+
+    //resizes images
     void on_cropResize_clicked();
 
-    void on_exit_clicked();
+
 
 private:
     Ui::GW *ui;

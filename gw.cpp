@@ -22,6 +22,9 @@ GW::GW(QWidget *parent)
 
     ui->setupUi(this);
 
+    //sets size
+    setFixedSize(228, 100);
+
 
 
 }
@@ -32,6 +35,8 @@ GW::~GW()
 }
 
 
+
+//resizes images
 void GW::on_cropResize_clicked()
 {
 
@@ -105,9 +110,12 @@ void GW::on_cropResize_clicked()
         //checks how many valid files there are in the folder
         foreach (QFileInfo fileInfo, dir.entryInfoList()) {
 
+            //converts file extension to lowercase for comparisson
             string lower = fileInfo.suffix().toLocal8Bit().constData();
 
-            std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+            for_each(lower.begin(), lower.end(), [](char & c){
+                     c = tolower(c);
+            });
 
             if(formats.find(lower) != formats.end()){
                i++;
@@ -123,23 +131,39 @@ void GW::on_cropResize_clicked()
 
     foreach (QFileInfo fileInfo, dir.entryInfoList()) {
 
-            i++;
 
+
+            //converts file extension to lowercase for comparisson
             string lower = fileInfo.suffix().toLocal8Bit().constData();
 
-            std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+            for_each(lower.begin(), lower.end(), [](char & c){
+                c = tolower(c);
+            });
 
 
 
             if(formats.find(lower) != formats.end()){
 
+
+            //scales image
             QImage img(fileInfo.filePath());
-
             QPixmap pixmap;
-
             pixmap = pixmap.fromImage(img.scaled(ui->Width->value(), ui->Height->value(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
-            QString final = ("./Resized/" + fileInfo.fileName());
+
+
+            //saves image
+            QString final;
+            if (ui->saveToSameFolder->isChecked()){
+
+            final = (fileInfo.absoluteFilePath());
+
+            }
+            else{
+
+            final = ("./Resized/" + fileInfo.fileName());
+
+            }
 
 
             QFile file(final);
@@ -167,9 +191,9 @@ void GW::on_cropResize_clicked()
 
 
 
-    //if amount of valid images insside ressized folder is greater then one, then throw confirmation message
+    //if amount of valid images insside resized folder is greater then one, then throw confirmation message
     if(i > 0){
-        QMessageBox::information(this, "Finished", "Resizing process done.");
+        QMessageBox::information(this, "Notice", "Finished");
     }
 
 
@@ -180,8 +204,3 @@ void GW::on_cropResize_clicked()
 
 
 
-
-void GW::on_exit_clicked()
-{
-    QCoreApplication::quit();
-}

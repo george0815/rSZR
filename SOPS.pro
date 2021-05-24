@@ -1,10 +1,13 @@
 QT       += core gui
+QT       += widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
 CONFIG += c++11
 
 RC_ICONS = rSZR.ico
+
+TARGET = rSZR
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
